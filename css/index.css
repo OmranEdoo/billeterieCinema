@@ -37,27 +37,30 @@ nav {
     align-items: center;
 }
 
+#blaze {
+    margin-top: 50px;
+}
 
 @font-face {
     font-family: 'Yellowtail';
-    src: url('/font/Yellowtail-Regular.ttf');
+    src: url('../font/Yellowtail-Regular.ttf');
 }
 
 @font-face {
     font-family: 'Oswald';
-    src: url('/font/Oswald-Light.ttf');
+    src: url('../font/Oswald-Light.ttf');
 }
 
 .big {
-    font: bold 80px "Yellowtail";
+    font: bold 100px "Yellowtail";
     fill: rgba(255, 255, 255);
     text-shadow: 0.01em 0.01em 0.02em rgb(179, 22, 22), 0 0 0.5em rgb(84, 20, 204), 0 0 0.2em rgb(84, 20, 204);
 }
 
 .home {
     width: 100vw;
-    height: 100vh;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),url('/img/neonWall.jpg');
+    height: 100%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),url('../img/neonWall.jpg');
     background-size: cover;
     position:relative;
     overflow:hidden;
@@ -105,7 +108,7 @@ p {
 .affiche {
     width: 180px;
     height: 200px;
-    background-color: aquamarine;
+    background: aquamarine;
     margin-left: 20px;
     border-radius: 10px;
 }

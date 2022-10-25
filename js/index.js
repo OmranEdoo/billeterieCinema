@@ -12,30 +12,31 @@ let getConfig = function() {
     })
     .then((data)=>{
         baseImageURL = data.images.secure_base_url;
-        logoSizes = data.images.logo_sizes;
+        logoSizes = data.images.logo_sizes.slice(-1); // On choisit la dernière taille qui correspond à la taille la plus grande afin d'avoir la meilleure qualité puisque toute manière on va redimensionner l'image
         console.log('config fetched');
-        runSearch('jaws', baseImageURL, logoSizes)
+        foundMovies(baseImageURL, logoSizes)
     })
     .catch(function(err){
         alert(err);
     });
 }
 
-let runSearch = function (keyword, baseImageURL, logoSizes) {
-    let url = ''.concat(baseURL, 'search/movie?api_key=', APIKEY, '&query=', keyword);
+let foundMovies = function (baseImageURL, logoSizes) {
+    let url = ''.concat(baseURL, 'movie/now_playing?api_key=', APIKEY, '&language=en-US&page=1');
     fetch(url)
     .then(result=>result.json())
     .then((data)=>{
-        console.log("runsearch fetched", data);
-        imgPath = data.page.result[0].poster_path;
-        console.log(imgPath);
+        console.log(data.results);
         let affiches = document.getElementsByClassName("affiche");
-        let imageURL = baseImageURL.concat(logoSizes[0], "/", imgPath);
-        console.log(imageURL);
 
-        affiches.forEach(affiche => {
-            affiche.style.backgroundImage = "url('".concat(imageURL, "')");
-        });
+        for(let i = 0; i<8; i++){
+            imgPath = data.results[i].poster_path;
+            let imageURL = baseImageURL.concat(logoSizes, imgPath);
+            affiches[i].style.backgroundImage = "url('".concat(imageURL, "')");
+            affiches[i].style.backgroundSize = "cover";
+            affiches[i+8].style.backgroundImage = "url('".concat(imageURL, "')");
+            affiches[i+8].style.backgroundSize = "cover";
+        }
     })
 }
 
