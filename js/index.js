@@ -3,6 +3,14 @@ let baseURL = 'https:api.themoviedb.org/3/';
 let baseImageURL;
 let logoSizes;
 let imgPath;
+/*
+const largeurAffiche = 200; //px
+const longueurAffiche = 220;
+const marginLeft = 20;
+
+let largeurEcran = $(window).width();
+
+let nbAffiches = parseInt(largeurEcran/(largeurAffiche+marginLeft))+1;*/
 
 let getConfig = function() {
     let url = "".concat(baseURL, 'configuration?api_key=', APIKEY);
@@ -29,13 +37,13 @@ let foundMovies = function (baseImageURL, logoSizes) {
         console.log(data.results);
         let affiches = document.getElementsByClassName("affiche");
 
-        for(let i = 0; i<8; i++){
+        for(let i = 0; i<nbAffiches; i++){
             imgPath = data.results[i].poster_path;
             let imageURL = baseImageURL.concat(logoSizes, imgPath);
             affiches[i].style.backgroundImage = "url('".concat(imageURL, "')");
             affiches[i].style.backgroundSize = "cover";
-            affiches[i+8].style.backgroundImage = "url('".concat(imageURL, "')");
-            affiches[i+8].style.backgroundSize = "cover";
+            affiches[i+nbAffiches].style.backgroundImage = "url('".concat(imageURL, "')");
+            affiches[i+nbAffiches].style.backgroundSize = "cover";
         }
     })
 }

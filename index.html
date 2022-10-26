@@ -3,8 +3,9 @@
   <head>
     <meta charset="utf-8">
     <title>CINE CLASSIC</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   </head>
-  <link rel="stylesheet" href="css/index.css">
+  
   <body>
 
     <nav class="center">
@@ -31,29 +32,11 @@
 
 
       <h2>Actuellement en salle</h2>
-      <div class="scroll-parent">
-          <div class="scroll-element primary">
-              <div class="affiche"></div>
-              <div class="affiche"></div>
-              <div class="affiche"></div>
-              <div class="affiche"></div>
-              <div class="affiche"></div>
-              <div class="affiche"></div>
-              <div class="affiche"></div>
-              <div class="affiche"></div>
-          </div>
-          <div class="scroll-element secondary">
-              <div class="affiche"></div>
-              <div class="affiche"></div>
-              <div class="affiche"></div>
-              <div class="affiche"></div>
-              <div class="affiche"></div>
-              <div class="affiche"></div>
-              <div class="affiche"></div>
-              <div class="affiche"></div>
-          </div>
+      <div id="scroll-parent">
+        <div class="scroll-element primary"></div>
+        <div class="scroll-element secondary"></div>
+      </div>
 
-        </div>
     </div>
 
     <p>tetstst</p>
@@ -61,7 +44,9 @@
     <label for="pseudo">Rentrez un pseudo d'au moins 3 lettres</label>
     <input type="text" id="pseudo"> 
     
+    <script src="js/affiche.js"></script>
     <script src="js/index.js"></script>
 
+    <link rel="stylesheet" href="css/index.css">
   </body>
 </html>

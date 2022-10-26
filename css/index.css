@@ -87,7 +87,7 @@ p {
     text-align: justify;
 }
 
-.scroll-parent{
+#scroll-parent{
     position: relative;
     width: 100vw;
     height: 240px;
@@ -113,7 +113,7 @@ p {
     border-radius: 10px;
 }
 
-.scroll-parent:hover .primary, .scroll-parent:hover .secondary {
+#scroll-parent:hover .primary, #scroll-parent:hover .secondary {
     animation-play-state: paused;
 }
 
@@ -146,22 +146,12 @@ p {
 .affiche:hover{
     width: 200px;
     height: 220px;
-    -webkit-transition: all 0.5s ease-in-out;
-    transition: all 0.5s ease-in-out;    
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;    
 }
 
-@keyframes allume {
-    0% {
-        fill: rgba(255, 255, 255, 0);
-        text-shadow: 0.01em 0.01em 0.02em rgba(179, 22, 22, 0), 0 0 0.5em rgba(84, 20, 204, 0), 0 0 0.2em rgba(84, 20, 204, 0);
-    } 10% {
-        fill: rgba(255, 255, 255, 0);
-        text-shadow: 0.01em 0.01em 0.02em rgba(179, 22, 22, 0), 0 0 0.5em rgba(84, 20, 204, 0), 0 0 0.2em rgba(84, 20, 204, 0);
-    } 40% {
-        fill: rgba(255, 255, 255);
-        text-shadow: 0.01em 0.01em 0.02em rgb(179, 22, 22), 0 0 3em rgb(84, 20, 204), 0 0 1em rgb(84, 20, 204);
-    } 100% {
-        fill: rgba(255, 255, 255);
-        text-shadow: 0.01em 0.01em 0.02em rgb(179, 22, 22), 0 0 0.5em rgb(84, 20, 204), 0 0 0.2em rgb(84, 20, 204);
+@media screen and (max-width: 800px) {
+    #scroll-parent{
+        display: none;
     }
 }
