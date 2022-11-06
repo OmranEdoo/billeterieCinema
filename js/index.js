@@ -3,14 +3,6 @@ let baseURL = 'https:api.themoviedb.org/3/';
 let baseImageURL;
 let logoSizes;
 let imgPath;
-/*
-const largeurAffiche = 200; //px
-const longueurAffiche = 220;
-const marginLeft = 20;
-
-let largeurEcran = $(window).width();
-
-let nbAffiches = parseInt(largeurEcran/(largeurAffiche+marginLeft))+1;*/
 
 let getConfig = function() {
     let url = "".concat(baseURL, 'configuration?api_key=', APIKEY);
@@ -37,14 +29,47 @@ let foundMovies = function (baseImageURL, logoSizes) {
         console.log(data.results);
         let affiches = document.getElementsByClassName("affiche");
 
-        for(let i = 0; i<nbAffiches; i++){
+        //affiches scroll
+        for(let i = 0; i<nbAffichesScroll; i++){
             imgPath = data.results[i].poster_path;
             let imageURL = baseImageURL.concat(logoSizes, imgPath);
             affiches[i].style.backgroundImage = "url('".concat(imageURL, "')");
             affiches[i].style.backgroundSize = "cover";
-            affiches[i+nbAffiches].style.backgroundImage = "url('".concat(imageURL, "')");
-            affiches[i+nbAffiches].style.backgroundSize = "cover";
+            affiches[i+nbAffichesScroll].style.backgroundImage = "url('".concat(imageURL, "')");
+            affiches[i+nbAffichesScroll].style.backgroundSize = "cover";
         }
+
+        let titres = document.getElementsByClassName("titre");
+
+        //autres affiches
+        for(let i = 0; i<nbAffiches; i++){
+            imgPath = data.results[i].poster_path;
+            let imageURL = baseImageURL.concat(logoSizes, imgPath);
+            affiches[i+nbAffichesScroll].style.backgroundImage = "url('".concat(imageURL, "')");
+            affiches[i+nbAffichesScroll].style.backgroundSize = "cover";
+
+            titres[i].innerText = data.results[i].original_title;
+            foundGenre(data.results[i].genre_ids[0], i);
+        }
+    })
+}
+
+let foundGenre = function (id, i) {
+    let url = ''.concat(baseURL, '/genre/movie/list?api_key=', APIKEY, '&language=en-US&page=1');
+    fetch(url)
+    .then(result=>result.json())
+    .then((data)=>{
+
+        let genres = document.getElementsByClassName("genre");
+
+        //console.log(data.genres);
+        data.genres.forEach(element => {
+            
+            if(element.id == id){
+                let genre = element.name;
+                genres[i].innerText = genre;
+            }
+        });
     })
 }
 

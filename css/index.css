@@ -58,8 +58,7 @@ nav {
 }
 
 .home {
-    width: 100vw;
-    height: 100%;
+    width: 100%;
     background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),url('../img/neonWall.jpg');
     background-size: cover;
     position:relative;
@@ -75,11 +74,12 @@ h1 {
 }
 
 h2{
-    margin-top: 0;
+    position: absolute;
     margin-left: 5%;
     color: white;
     font-family: 'Oswald';
     letter-spacing: 2px;
+    transform: translateY(-100px);
 }
 
 p {
@@ -89,8 +89,9 @@ p {
 
 #scroll-parent{
     position: relative;
+    bottom: 30px;
     width: 100vw;
-    height: 240px;
+    height: 260px;
     overflow-x: hidden;
 }
 
@@ -107,7 +108,7 @@ p {
 
 .affiche {
     width: 180px;
-    height: 200px;
+    height: 240px;
     background: aquamarine;
     margin-left: 20px;
     border-radius: 10px;
@@ -145,13 +146,66 @@ p {
 
 .affiche:hover{
     width: 200px;
-    height: 220px;
+    height: 260px;
     -webkit-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;    
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1000px) {
     #scroll-parent{
         display: none;
     }
+
+    h2{
+        display: none;
+    }
+}
+
+.margin50{
+    margin: 50px;
+}
+
+.bandeH{
+    width: 100%;
+    height: 280px;
+    display: inline-flex;
+}
+
+.bandeV{
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    height: auto;
+}
+
+.padDown0{
+    padding-bottom: 0;
+}
+
+.margDown0{
+    margin-bottom: 0;
+}
+
+.margUp0{
+    margin-top: 0;
+}
+
+.padUp0{
+    padding-top: 0;
+}
+
+.padLeft0{
+    padding-left: 0;
+}
+
+.bold{
+    font-weight: bold;
+}
+
+.red{
+    color: red;
+}
+
+.bigText{
+    font-size: x-large;
 }
