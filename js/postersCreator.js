@@ -80,7 +80,13 @@ var affichesContainer = document.getElementById("affichesContainer");
 for(let i = 0; i<nbAffiches; i++){
 
     let bandeH = document.createElement('div');
-    bandeH.className = "bandeH";
+
+    if (i%2 == 0){
+        bandeH.className = "bandeH pair";
+    } else {
+        bandeH.className = "bandeH impair";
+    }
+    
     affichesContainer.appendChild(bandeH);
 
     let affiche = document.createElement('div');
@@ -101,4 +107,9 @@ for(let i = 0; i<nbAffiches; i++){
     titre.className = "titre padUp0 margUp0 padLeft0 bold bigText";
     titre.id = "titre"+i;
     bandeV.appendChild(titre);
+
+    let test = document.createElement('div');
+    test.className = "neon";
+    test.innerText = "15h30";
+    bandeH.appendChild(test);
 }

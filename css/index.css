@@ -51,10 +51,23 @@ nav {
     src: url('../font/Oswald-Light.ttf');
 }
 
-.big {
+.title {
     font: bold 100px "Yellowtail";
+}
+
+.neon {
+    display:table-cell;
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    border-radius: 10%;
+    border: solid 2px;
+    color: aliceblue;
     fill: rgba(255, 255, 255);
+    box-shadow: 0.01em 0.01em 0.02em rgb(179, 22, 22), 0 0 0.5em rgb(84, 20, 204), 0 0 0.2em rgb(84, 20, 204);
     text-shadow: 0.01em 0.01em 0.02em rgb(179, 22, 22), 0 0 0.5em rgb(84, 20, 204), 0 0 0.2em rgb(84, 20, 204);
+    text-align: center;
+    font-weight: bold;
 }
 
 .home {
@@ -112,6 +125,7 @@ p {
     background: aquamarine;
     margin-left: 20px;
     border-radius: 10px;
+    align-self: center;
 }
 
 #scroll-parent:hover .primary, #scroll-parent:hover .secondary {
@@ -176,6 +190,14 @@ p {
     flex-direction: column;
     width: auto;
     height: auto;
+}
+
+.pair{
+    background: rgb(30, 30, 30);
+}
+
+.impair{
+    background: rgb(43, 43, 43);
 }
 
 .padDown0{
