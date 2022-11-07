@@ -85,6 +85,7 @@ for(let i = 0; i<nbAffiches; i++){
 
     let affiche = document.createElement('div');
     affiche.className = "affiche margin50";
+    affiche.id = "affiche"+i;
     bandeH.appendChild(affiche);
 
     let bandeV = document.createElement('div');
@@ -93,9 +94,11 @@ for(let i = 0; i<nbAffiches; i++){
 
     let genre = document.createElement('p');
     genre.className = "genre padDown0 margDown0 padLeft0 bold red";
+    genre.id = "genre"+i;
     bandeV.appendChild(genre);
 
     let titre = document.createElement('p');
     titre.className = "titre padUp0 margUp0 padLeft0 bold bigText";
+    titre.id = "titre"+i;
     bandeV.appendChild(titre);
 }
