@@ -1,4 +1,6 @@
-function MovieRoom(shape, seats){
-    this.shape = shape;
-    this.seats = seats;
+function MovieRoom(id, arrangement, roomNumber, numberOfSeats){
+    this.id = id;
+    this.arrangement = arrangement;
+    this.roomNumber = roomNumber;
+    this.numberOfSeats = numberOfSeats;
 }

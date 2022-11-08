@@ -59,14 +59,15 @@ let foundMovies = function (baseImageURL, logoSizes) {
     .then((data)=>{
         console.log(data.results);
 
-        for(let i = 0; i < 10; i++){//nbMovies doit dépendre du nombre de séance qui est dans la bdd à créer
+        for(let i = 0; i < 10; i++){
             let id = data.results[i].id;
             let name = data.results[i].original_title;
             let synopsis = data.results[i].overview;
             let category = categories[data.results[i].genre_ids[0]];
             let duration = 0;
             let picture = "url('".concat(baseImageURL.concat(logoSizes, data.results[i].poster_path), "')");
-            let movie = new Movie(id, name, synopsis, category, duration, picture);
+            let popularity = data.results[i].popularity;
+            let movie = new Movie(id, name, synopsis, category, duration, picture, popularity);
             movies.push(movie);
         }
 
@@ -104,4 +105,7 @@ let displayPosters = function(){
         titre.innerText = movie.name;
         genre.innerText = movie.category;
     }
+
+    movieRoomManager.chooseMovieRoom();////
 }
+

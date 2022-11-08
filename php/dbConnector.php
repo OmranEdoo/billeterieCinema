@@ -4,15 +4,17 @@
         // Connexion at MySQL
         $mysqlClient = new PDO('mysql:host=localhost;dbname=cinema;charset=utf8', 'root', 'root');
 
-        $sqlQuery = 'SELECT COUNT(*) AS nbOfRoom FROM movieroom';
+        $sqlQuery = $_POST["query"];
         $statement = $mysqlClient->prepare($sqlQuery);
         $statement->execute();
         $tab = $statement->fetchAll();
 
         foreach ($tab as $line) {
-          ?>
-          <p>test <?php echo $line[0]; ?></p>
-          <?php
+            for ($x = 0; $x < count($line); $x++) {
+            echo $line[$x];
+            echo " ";
+            }
+          echo "\n";
         }
     }
     catch(Exception $e)

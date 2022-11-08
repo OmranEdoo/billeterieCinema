@@ -13,6 +13,9 @@ var home = document.getElementsByClassName("home")[0];
 home.style.height = ""+$(document).height()+"px;";
 console.log(""+$(document).height()+"px");
 
+let nbAffiches;
+
+
 // création initiale des affiches dans la bande de scroll
 for(let i = 0; i<nbAffichesScroll; i++){
     let afficheP = document.createElement('div');
@@ -43,7 +46,7 @@ if(window.attachEvent) {
             }
         }
 
-        nbAffiches = newNbAffiches;
+        nbAffichesScroll = newNbAffiches;
     });
 }
 else if(window.addEventListener) {
@@ -73,43 +76,50 @@ else {
     console.log("The browser does not support Javascript event binding")
 }
 
-let nbAffiches = 10;
+
 var affichesContainer = document.getElementById("affichesContainer");
 
-// création initiale des affiches du bas
-for(let i = 0; i<nbAffiches; i++){
+$.ajax({
+    method: "POST",
+    url: "php/dbConnector.php",
+    data: {query: "SELECT COUNT(*) FROM movieroom"}
+}).done(function(response) {
+    nbAffiches = response;
+    // création initiale des affiches du bas
+    for(let i = 0; i<nbAffiches; i++){
 
-    let bandeH = document.createElement('div');
+        let bandeH = document.createElement('div');
 
-    if (i%2 == 0){
-        bandeH.className = "bandeH pair";
-    } else {
-        bandeH.className = "bandeH impair";
+        if (i%2 == 0){
+            bandeH.className = "bandeH pair";
+        } else {
+            bandeH.className = "bandeH impair";
+        }
+        
+        affichesContainer.appendChild(bandeH);
+
+        let affiche = document.createElement('div');
+        affiche.className = "affiche margin50";
+        affiche.id = "affiche"+i;
+        bandeH.appendChild(affiche);
+
+        let bandeV = document.createElement('div');
+        bandeV.className = "bandeV";
+        bandeH.appendChild(bandeV);
+
+        let genre = document.createElement('p');
+        genre.className = "genre padDown0 margDown0 padLeft0 bold red";
+        genre.id = "genre"+i;
+        bandeV.appendChild(genre);
+
+        let titre = document.createElement('p');
+        titre.className = "titre padUp0 margUp0 padLeft0 bold bigText";
+        titre.id = "titre"+i;
+        bandeV.appendChild(titre);
+
+        let test = document.createElement('div');
+        test.className = "neon";
+        test.innerText = "15h30";
+        bandeH.appendChild(test);
     }
-    
-    affichesContainer.appendChild(bandeH);
-
-    let affiche = document.createElement('div');
-    affiche.className = "affiche margin50";
-    affiche.id = "affiche"+i;
-    bandeH.appendChild(affiche);
-
-    let bandeV = document.createElement('div');
-    bandeV.className = "bandeV";
-    bandeH.appendChild(bandeV);
-
-    let genre = document.createElement('p');
-    genre.className = "genre padDown0 margDown0 padLeft0 bold red";
-    genre.id = "genre"+i;
-    bandeV.appendChild(genre);
-
-    let titre = document.createElement('p');
-    titre.className = "titre padUp0 margUp0 padLeft0 bold bigText";
-    titre.id = "titre"+i;
-    bandeV.appendChild(titre);
-
-    let test = document.createElement('div');
-    test.className = "neon";
-    test.innerText = "15h30";
-    bandeH.appendChild(test);
-}
+});

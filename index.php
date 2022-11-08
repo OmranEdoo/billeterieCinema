@@ -40,8 +40,6 @@
     </div>
 
     <div id="affichesContainer"></div>
-
-    <?php include('php/index.php');?>
     
     <script src="js/movie.js"></script>
     <script src="js/postersCreator.js"></script>
