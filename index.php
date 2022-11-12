@@ -42,8 +42,13 @@
     <div id="affichesContainer"></div>
     
     <script src="js/movie.js"></script>
+    <script src="js/movieRoom.js"></script>
+    <script src="js/seat.js"></script>
+    <script src="js/session.js"></script>
     <script src="js/postersCreator.js"></script>
     <script src="js/movieManager.js"></script>
+    <script src="js/movieRoomManager.js"></script>
+    <script src="js/sessionManager.js"></script>
 
     <link rel="stylesheet" href="css/index.css">
 

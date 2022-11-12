@@ -1,3 +1,5 @@
-function Seat(position){
-    this.position = position;
+class Seat {
+    constructor(position){
+        this.position = position;
+    }
 }

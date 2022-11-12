@@ -1,6 +1,7 @@
-function Session(duration, hours, movieRoom, movie){
-    this.duration = duration;
-    this.hours = hours;
-    this.movieRoom = movieRoom;
-    this.movie = movie;
+class Session {
+    constructor(movie, movieRoom, hours){
+        this.movieRoom = movieRoom;
+        this.movie = movie;
+        this.hours = hours;
+    }
 }

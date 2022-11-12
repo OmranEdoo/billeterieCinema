@@ -122,4 +122,41 @@ $.ajax({
         test.innerText = "15h30";
         bandeH.appendChild(test);
     }
+
+    new MovieManager();
 });
+
+let displayPosters = function(sessions){
+        
+    let affiches = document.getElementsByClassName("affiche");
+
+    //affiches scroll
+    for(let i = 0; i<nbAffichesScroll; i++){
+        console.log("scroll");
+        console.log(sessions[i].movieRoom);
+        let movie = sessions[i].movie;
+        
+        affiches[i].style.backgroundImage = movie.picture;
+        affiches[i].style.backgroundSize = "cover";
+        affiches[i+nbAffichesScroll].style.backgroundImage = movie.picture;
+        affiches[i+nbAffichesScroll].style.backgroundSize = "cover";
+    }
+
+    //autres affiches
+    for(let i = 0; i<nbAffiches; i++){
+        let affiche = document.getElementById("affiche"+i);
+        let titre = document.getElementById("titre"+i);
+        let genre = document.getElementById("genre"+i);
+
+        let movie = sessions[i].movie;
+        console.log("no scroll");
+        console.log(sessions[i].movieRoom);
+        affiche.style.backgroundImage = movie.picture;
+        affiche.style.backgroundSize = "cover";
+
+        titre.innerText = movie.name;
+        genre.innerText = movie.category;
+    }
+
+    //movieRoomManager.chooseMovieRoom();////
+}
