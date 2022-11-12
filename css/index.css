@@ -231,3 +231,8 @@ p {
 .bigText{
     font-size: x-large;
 }
+
+.scheduleBox{
+    margin: 10px;
+    align-self: center;
+}

@@ -4,11 +4,10 @@ class SessionManager {
         this.movieRooms = movieRooms;
 
         var nbMovies = this.movies.length;
-        let hours = [];
 
         SessionManager.sortMovies(0, nbMovies-1, this.movies);
         SessionManager.sortMovieRooms(0, nbMovies-1, this.movieRooms);
-        SessionManager.fillSessions(hours, movies, movieRooms);
+        SessionManager.fillSessions(movies, movieRooms);
     }
 
     static sortMovies(debut, fin, movies) {
@@ -61,7 +60,8 @@ class SessionManager {
         return d;
     }
 
-    static fillSessions(hours, movies, movieRooms){
+    static fillSessions(movies, movieRooms){
+        var hours;
         let beginHour = 555// first session at 9h15 => 9*60+15 minutes
         let endHour = 1440; // the last session can finish at midnight maximum
 
@@ -69,6 +69,7 @@ class SessionManager {
         var nbMovies = movies.length;
 
         for(let i = 0; i < nbMovies; i++){
+            hours = [];
             let movie = movies[i];
             let movieRoom = movieRooms[i];
             let duration = movie.duration;

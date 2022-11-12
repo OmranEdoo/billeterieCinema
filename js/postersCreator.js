@@ -95,6 +95,8 @@ $.ajax({
         } else {
             bandeH.className = "bandeH impair";
         }
+
+        bandeH.id = "bandeH"+i;
         
         affichesContainer.appendChild(bandeH);
 
@@ -116,11 +118,6 @@ $.ajax({
         titre.className = "titre padUp0 margUp0 padLeft0 bold bigText";
         titre.id = "titre"+i;
         bandeV.appendChild(titre);
-
-        let test = document.createElement('div');
-        test.className = "neon";
-        test.innerText = "15h30";
-        bandeH.appendChild(test);
     }
 
     new MovieManager();
@@ -132,8 +129,6 @@ let displayPosters = function(sessions){
 
     //affiches scroll
     for(let i = 0; i<nbAffichesScroll; i++){
-        console.log("scroll");
-        console.log(sessions[i].movieRoom);
         let movie = sessions[i].movie;
         
         affiches[i].style.backgroundImage = movie.picture;
@@ -147,16 +142,33 @@ let displayPosters = function(sessions){
         let affiche = document.getElementById("affiche"+i);
         let titre = document.getElementById("titre"+i);
         let genre = document.getElementById("genre"+i);
+        let bandeH = document.getElementById("bandeH"+i);
 
         let movie = sessions[i].movie;
-        console.log("no scroll");
-        console.log(sessions[i].movieRoom);
+        let hours = sessions[i].hours;
+
+        console.log(hours);
+
         affiche.style.backgroundImage = movie.picture;
         affiche.style.backgroundSize = "cover";
 
         titre.innerText = movie.name;
         genre.innerText = movie.category;
+
+        hours.forEach(timeInMinute => {
+            let scheduleBox = document.createElement('div');
+            scheduleBox.className = "neon scheduleBox";
+
+            let h = Math.round(timeInMinute/60);
+            let min = timeInMinute%60;
+            if (min < 10)
+                scheduleBox.innerText = h+"h0"+min;
+            else
+                scheduleBox.innerText = h+"h"+min;
+
+            bandeH.appendChild(scheduleBox);
+        });
+        
     }
 
-    //movieRoomManager.chooseMovieRoom();////
 }
