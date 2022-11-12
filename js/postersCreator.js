@@ -139,6 +139,9 @@ let displayPosters = function(sessions){
 
     //autres affiches
     for(let i = 0; i<nbAffiches; i++){
+        let currentDate = new Date();
+        let actualTime = currentDate.getHours()*60+currentDate.getMinutes();
+
         let affiche = document.getElementById("affiche"+i);
         let titre = document.getElementById("titre"+i);
         let genre = document.getElementById("genre"+i);
@@ -146,8 +149,6 @@ let displayPosters = function(sessions){
 
         let movie = sessions[i].movie;
         let hours = sessions[i].hours;
-
-        console.log(hours);
 
         affiche.style.backgroundImage = movie.picture;
         affiche.style.backgroundSize = "cover";
@@ -157,9 +158,13 @@ let displayPosters = function(sessions){
 
         hours.forEach(timeInMinute => {
             let scheduleBox = document.createElement('div');
-            scheduleBox.className = "neon scheduleBox";
 
-            let h = Math.round(timeInMinute/60);
+            if(actualTime > timeInMinute)
+                scheduleBox.className = "neon notClickable scheduleBox";
+            else
+                scheduleBox.className = "neon scheduleBox";
+
+            let h = parseInt(timeInMinute/60);
             let min = timeInMinute%60;
             if (min < 10)
                 scheduleBox.innerText = h+"h0"+min;

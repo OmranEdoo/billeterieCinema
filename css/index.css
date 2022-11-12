@@ -236,3 +236,7 @@ p {
     margin: 10px;
     align-self: center;
 }
+
+.notClickable{
+    color: rgb(221, 251, 0);
+}
