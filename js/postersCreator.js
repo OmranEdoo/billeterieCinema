@@ -81,7 +81,7 @@ var affichesContainer = document.getElementById("affichesContainer");
 
 $.ajax({
     method: "POST",
-    url: "php/dbConnector.php",
+    url: "php/dbGetter.php",
     data: {query: "SELECT COUNT(*) FROM movieroom"}
 }).done(function(response) {
     nbAffiches = response;
@@ -159,7 +159,7 @@ let displayPosters = function(sessions){
         hours.forEach(timeInMinute => {
             let scheduleBox = document.createElement('div');
 
-            if(actualTime > timeInMinute)
+            if (actualTime > timeInMinute)
                 scheduleBox.className = "neon notClickable scheduleBox";
             else
                 scheduleBox.className = "neon scheduleBox";
@@ -172,8 +172,14 @@ let displayPosters = function(sessions){
                 scheduleBox.innerText = h+"h"+min;
 
             bandeH.appendChild(scheduleBox);
-        });
-        
-    }
 
+            if (scheduleBox.className == "neon scheduleBox"){
+                scheduleBox.addEventListener('click', event => {
+                    url = 'session/sessionPage.html?name=' + sessions[i];
+                    document.location.href = url;
+                    //location.replace("session/sessionPage.html");
+                });
+            }
+        });
+    }
 }

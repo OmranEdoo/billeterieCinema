@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>CINE CLASSIC - Session</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  </head>
+  
+  <body>
+    
+    <script>
+      window.onload = function () {
+        var url = document.location.href,
+          params = url.split('?')[1].split('&'),
+          data = {}, tmp;
+        for (var i = 0, l = params.length; i < l; i++) {
+          tmp = params[i].split('=');
+          data[tmp[0]] = tmp[1];
+        }
+        console.log(data);
+      }
+    </script>
+    
+    <nav class="center">
+      <ul class="liste">
+          <li class="item">Accueil</li>
+          <li class="item">Projets</li>
+          <li class="item">Services</li>
+          <li class="item">Contact</li>
+      </ul>
+  </nav>
+
+    <label for="pseudo">Rentrez un pseudo d'au moins 3 lettres</label>
+    <input type="text" id="pseudo"> 
+
+    
+    <link rel="stylesheet" href="../css/index.css">
+
+  </body>
+</html>

@@ -60,6 +60,18 @@ class SessionManager {
         return d;
     }
 
+    static fillTableSession(session) {
+        $.ajax({
+            method: "POST",
+            url: "php/dbSetter.php",
+            data: {query: "DROP DATABASE session; INSERT INTO session VALUES ('"+session.movie.id+"','"+
+                                                        session.movieRoom.id+"', '"+
+                                                        session.hours+"')"}
+        }).done(function(response) {
+            console.log(response);
+        });
+    }
+
     static fillSessions(movies, movieRooms){
         var hours;
         let beginHour = 555// first session at 9h15 => 9*60+15 minutes
@@ -81,6 +93,7 @@ class SessionManager {
 
             let session = new Session(movie, movieRoom, hours);
             sessions.push(session);
+            SessionManager.fillTableSession(session);
         }
 
         console.log("sessions");
