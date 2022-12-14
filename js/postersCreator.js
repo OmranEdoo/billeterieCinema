@@ -11,7 +11,6 @@ var secondaryScroll = document.getElementsByClassName("scroll-element secondary"
 
 var home = document.getElementsByClassName("home")[0];
 home.style.height = ""+$(document).height()+"px;";
-console.log(""+$(document).height()+"px");
 
 let nbAffiches;
 
@@ -35,7 +34,6 @@ if(window.attachEvent) {
         let newNbAffiches = parseInt(largeurEcran/(largeurAffiche+marginLeft))+1;
         
         if (nbAffichesScroll < newNbAffiches){
-            console.log("___new___"+newNbAffiches);
             for (let i = nbAffichesScroll; i < newNbAffiches; i++){
                 let afficheP = document.createElement('div');
                 let afficheS = document.createElement('div');
@@ -127,18 +125,32 @@ let displayPosters = function(sessions){
         
     let affiches = document.getElementsByClassName("affiche");
 
+    let movieIds = [];
+    let movies = [];
+
     //affiches scroll
     for(let i = 0; i<nbAffichesScroll; i++){
-        let movie = sessions[i].movie;
-        
-        affiches[i].style.backgroundImage = movie.picture;
-        affiches[i].style.backgroundSize = "cover";
-        affiches[i+nbAffichesScroll].style.backgroundImage = movie.picture;
-        affiches[i+nbAffichesScroll].style.backgroundSize = "cover";
+
+        let j = 0;
+
+        while (sessions.length > j && movieIds.includes(sessions[j].movie.id)){
+            j++;
+        }
+
+        if (j != sessions.length - 1){
+            let movie = sessions[j].movie;
+            movieIds.push(movie.id)
+            movies.push(movie);
+            
+            affiches[i].style.backgroundImage = movie.picture;
+            affiches[i].style.backgroundSize = "cover";
+            affiches[i+nbAffichesScroll].style.backgroundImage = movie.picture;
+            affiches[i+nbAffichesScroll].style.backgroundSize = "cover";
+        }
     }
 
     //autres affiches
-    for(let i = 0; i<nbAffiches; i++){
+    for(let i = 0; i<movies.length; i++){
         let currentDate = new Date();
         let actualTime = currentDate.getHours()*60+currentDate.getMinutes();
 
@@ -147,8 +159,15 @@ let displayPosters = function(sessions){
         let genre = document.getElementById("genre"+i);
         let bandeH = document.getElementById("bandeH"+i);
 
-        let movie = sessions[i].movie;
-        let hours = sessions[i].hours;
+        let movie = movies[i];
+
+        let hours = [];
+
+        sessions.forEach(session =>{
+            if (session.movie.id == movie.id){
+                hours.push(session.hour);
+            }
+        })
 
         affiche.style.backgroundImage = movie.picture;
         affiche.style.backgroundSize = "cover";
@@ -160,7 +179,7 @@ let displayPosters = function(sessions){
             let scheduleBox = document.createElement('div');
 
             if (actualTime > timeInMinute)
-                scheduleBox.className = "neon notClickable scheduleBox";
+                scheduleBox.className = "neon scheduleBox";//"neon notClickable scheduleBox";
             else
                 scheduleBox.className = "neon scheduleBox";
 
@@ -175,7 +194,7 @@ let displayPosters = function(sessions){
 
             if (scheduleBox.className == "neon scheduleBox"){
                 scheduleBox.addEventListener('click', event => {
-                    url = 'session/sessionPage.html?name=' + sessions[i];
+                    url = 'session/sessionPage.html?id=' + sessions[i].id;
                     document.location.href = url;
                     //location.replace("session/sessionPage.html");
                 });

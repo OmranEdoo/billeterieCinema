@@ -1,0 +1,9 @@
+#seats{
+    display: grid;
+    gap: 10px 10px;
+}
+
+.seat{
+    height: 10px;
+    width: 20px;
+}

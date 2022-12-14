@@ -6,6 +6,7 @@ var categories = {};
 
 class MovieManager {
     constructor() {
+        console.log("__test__");
         MovieManager.getConfig()
     }
 
@@ -18,8 +19,7 @@ class MovieManager {
         .then((data)=>{
             baseImageURL = data.images.secure_base_url;
             logoSizes = data.images.logo_sizes.slice(-1); // On choisit la dernière taille qui correspond à la taille la plus grande afin d'avoir la meilleure qualité puisque toute manière on va redimensionner l'image
-            console.log('config fetched');
-            MovieManager.foundCategories(baseImageURL, logoSizes);
+            MovieManager.foundCategories();
         })
         .catch(function(err){
             alert(err);
@@ -27,74 +27,90 @@ class MovieManager {
     }
     
     // create a dictionnary between ids and categories
-    static foundCategories(baseImageURL, logoSizes) {
+    static foundCategories() {
         let url = ''.concat(baseURL, '/genre/movie/list?api_key=', APIKEY, '&language=en-US&page=1');
         fetch(url)
         .then(result=>result.json())
         .then((data)=>{
     
-            //console.log(data.genres);
             data.genres.forEach(element => {
                 categories[element.id] = element.name;
             });
     
-            MovieManager.foundMovies(baseImageURL, logoSizes)
+            MovieManager.foundMovies()
         })
     }
     
-    static foundDuration(baseImageURL, logoSizes, index, movies) {
-        let url = ''.concat(baseURL, '/movie/'+movies[index].id+'?api_key=', APIKEY, '&language=en-US&page=1');
+    static foundDuration(movies, ids, names, synopsiss, categorys, i) {
+        let url = ''.concat(baseURL, '/movie/'+ids[i]+'?api_key=', APIKEY, '&language=en-US&page=1');
         fetch(url)
         .then(result=>result.json())
         .then((data)=>{
-            movies[index].duration = data.runtime;
-            if(movies.length > index+1){
-                MovieManager.foundDuration(baseImageURL, logoSizes, index+1, movies);
-            } else {
-                new MovieRoomManager(movies);
-            }
+            let duration = data.runtime;
+            let picture = "url('".concat(baseImageURL.concat(logoSizes, data.poster_path), "')");
+            let popularity = data.popularity;
+            let movie = new Movie(ids[i], names[i], synopsiss[i], categorys[i], duration, picture, popularity);
+            movies.push(movie);
+
+            if (i < 9)
+                MovieManager.foundDuration(movies, ids, names, synopsiss, categorys, i+1);
+            else
+                MovieManager.fillTableMovie(movies, 0);
         })
     }
 
-    static fillTableMovie(movie) {
+    static fillTableMovie(movies, i) {
+        var movie = movies[i];
+
+        var id = movie.id;
+        var name = movie.name;
+        var synopsis = movie.synopsis;
+        var category = movie.category;
+        var duration = movie.duration;
+        var picture = movie.picture.replace("url('", "").replace("')", "");
+        var popularity = movie.popularity;
+
         $.ajax({
             method: "POST",
-            url: "php/dbSetter.php",
-        data: {query: "DROP DATABASE movie; INSERT INTO movie VALUES ('"+movie.id+"','"+
-                                                        movie.name+"', '"+
-                                                        movie.synopsis+"', '"+
-                                                        movie.category+"', '"+
-                                                        movie.duration+"', '"+
-                                                        movie.picture+"', '"+
-                                                        movie.popularity+"')"}
-        }).done(function(response) {
-            console.log(response);
+            url: "php/moviePost.php",
+            data: {
+                id: id,
+                name: name,
+                synopsis: synopsis,
+                category: category,
+                duration: duration,
+                picture: picture,
+                popularity: popularity
+            }
+        }).done(function() {
+            if (i < movies.length - 1)
+                MovieManager.fillTableMovie(movies, i+1);
+            else
+                new MovieRoomManager(movies);
         });
     }
     
-    static foundMovies(baseImageURL, logoSizes) {
+    static foundMovies() {
         let movies = [];
 
         let url = ''.concat(baseURL, 'movie/now_playing?api_key=', APIKEY, '&language=en-US&page=1');
         fetch(url)
         .then(result=>result.json())
         .then((data)=>{
-            //console.log(data.results);
+
+            let ids = [];
+            let names = [];
+            let synopsiss = [];
+            let categorys = [];
     
             for(let i = 0; i < 10; i++){
-                let id = data.results[i].id;
-                let name = data.results[i].original_title;
-                let synopsis = data.results[i].overview;
-                let category = categories[data.results[i].genre_ids[0]];
-                let duration = 0;
-                let picture = "url('".concat(baseImageURL.concat(logoSizes, data.results[i].poster_path), "')");
-                let popularity = data.results[i].popularity;
-                let movie = new Movie(id, name, synopsis, category, duration, picture, popularity);
-                movies.push(movie);
-                MovieManager.fillTableMovie(movie);
+                ids.push(data.results[i].id);
+                names.push(data.results[i].original_title);
+                synopsiss.push(data.results[i].overview);
+                categorys.push(categories[data.results[i].genre_ids[0]]);
             }
 
-            MovieManager.foundDuration(baseImageURL, logoSizes, 0, movies);
+            MovieManager.foundDuration(movies, ids, names, synopsiss, categorys, 0); 
         })
     }
 }

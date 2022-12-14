@@ -43,12 +43,13 @@
     
     <script src="js/movie.js"></script>
     <script src="js/movieRoom.js"></script>
-    <script src="js/seat.js"></script>
+    <script src="js/seats.js"></script>
     <script src="js/session.js"></script>
     <script src="js/postersCreator.js"></script>
     <script src="js/movieManager.js"></script>
     <script src="js/movieRoomManager.js"></script>
     <script src="js/sessionManager.js"></script>
+    <script src="js/seatsManager.js"></script>
 
     <div class="text-gray text-neon grayBar">
       <p>Site codé par Omran</p>

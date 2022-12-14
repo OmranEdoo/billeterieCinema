@@ -1,7 +1,8 @@
 class Session {
-    constructor(movie, movieRoom, hours){
+    constructor(id, movie, movieRoom, hour){
+        this.id = id;
         this.movieRoom = movieRoom;
         this.movie = movie;
-        this.hours = hours;
+        this.hour = hour;
     }
 }

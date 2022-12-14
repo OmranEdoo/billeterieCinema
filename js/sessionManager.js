@@ -1,12 +1,14 @@
 class SessionManager {
     constructor(movies, movieRooms) {
-        this.movies = movies;
-        this.movieRooms = movieRooms;
 
-        var nbMovies = this.movies.length;
+        var nbMovies = movies.length;
+        var nbMovieRooms = movieRooms.length;
 
-        SessionManager.sortMovies(0, nbMovies-1, this.movies);
-        SessionManager.sortMovieRooms(0, nbMovies-1, this.movieRooms);
+        console.log(nbMovies);
+        console.log(nbMovieRooms);
+
+        SessionManager.sortMovies(0, nbMovies-1, movies);
+
         SessionManager.fillSessions(movies, movieRooms);
     }
 
@@ -15,14 +17,6 @@ class SessionManager {
             var indice_pivot = SessionManager.partitionMovies(debut, fin, movies);
             SessionManager.sortMovies(debut, indice_pivot-1, movies);
             SessionManager.sortMovies(indice_pivot+1, fin, movies);
-        }
-    }
-
-    static sortMovieRooms(debut, fin, movieRooms) {
-        if (debut < fin) {
-            var indice_pivot = SessionManager.partitionMovieRooms(debut, fin, movieRooms);
-            SessionManager.sortMovieRooms(debut, indice_pivot-1, movieRooms);
-            SessionManager.sortMovieRooms(indice_pivot+1, fin, movieRooms);
         }
     }
      
@@ -43,37 +37,34 @@ class SessionManager {
         return d;
     }
 
-    static partitionMovieRooms(debut, fin, movieRooms) {
-        var temp;
-        var valeur_pivot = movieRooms[debut].numberOfSeats, d = debut+1, f = fin;
-        while(d < f) {
-            while(d < f && movieRooms[f].numberOfSeats >= valeur_pivot) f--;
-            while(d < f && movieRooms[d].numberOfSeats <= valeur_pivot) d++;
-            temp = movieRooms[d].numberOfSeats;
-            movieRooms[d].numberOfSeats = movieRooms[f].numberOfSeats;
-            movieRooms[f].numberOfSeats = temp;
-        }
+    static fillTableSession(sessions, i){
+        console.log("test "+i);
 
-        if(movieRooms[d].numberOfSeats > valeur_pivot) d--;
-        movieRooms[debut].numberOfSeats = movieRooms[d].numberOfSeats;
-        movieRooms[d].numberOfSeats = valeur_pivot;
-        return d;
-    }
+        var session = sessions[i];
+        var id = session.id;
+        var idMovie = session.movie.id;
+        var idMovieRoom = session.movieRoom.id;
+        var hour = session.hour;
 
-    static fillTableSession(session) {
         $.ajax({
             method: "POST",
-            url: "php/dbSetter.php",
-            data: {query: "DROP DATABASE session; INSERT INTO session VALUES ('"+session.movie.id+"','"+
-                                                        session.movieRoom.id+"', '"+
-                                                        session.hours+"')"}
-        }).done(function(response) {
-            console.log(response);
+            url: "php/sessionPost.php",
+            data: {
+                id: id,
+                idMovie: idMovie,    
+                idMovieRoom: idMovieRoom,
+                hour: hour.toString()
+            }
+        }).done(function() {
+            if (i < sessions.length - 1)
+                SessionManager.fillTableSession(sessions, i+1);
+            else
+                new SeatsManager(sessions); 
         });
     }
 
     static fillSessions(movies, movieRooms){
-        var hours;
+
         let beginHour = 555// first session at 9h15 => 9*60+15 minutes
         let endHour = 1440; // the last session can finish at midnight maximum
 
@@ -81,23 +72,18 @@ class SessionManager {
         var nbMovies = movies.length;
 
         for(let i = 0; i < nbMovies; i++){
-            hours = [];
             let movie = movies[i];
             let movieRoom = movieRooms[i];
             let duration = movie.duration;
             let interval = duration+20+10-(duration+20)%5;
             let nbSessions = parseInt((endHour-beginHour)/interval);
-            for(let j = 0; j < nbSessions; j++){
-                hours.push(beginHour+j*interval);
-            }
 
-            let session = new Session(movie, movieRoom, hours);
-            sessions.push(session);
-            SessionManager.fillTableSession(session);
+            for(let j = 0; j < nbSessions; j++){
+                let session = new Session(i*nbMovies + j, movie, movieRoom, beginHour+j*interval);
+                sessions.push(session);
+            }
         }
 
-        console.log("sessions");
-        console.log(sessions);
-        displayPosters(sessions);
+        SessionManager.fillTableSession(sessions, 0);
     }
 }
