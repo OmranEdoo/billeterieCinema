@@ -12,18 +12,27 @@
     
     <nav class="center">
       <ul class="liste">
-          <li class="item">Accueil</li>
-          <li class="item">Projets</li>
-          <li class="item">Services</li>
+          <li class="item" onclick="retournerPageAccueil()">Accueil</li>
           <li class="item">Contact</li>
       </ul>
     </nav>
 
-    <div id="seats"></div>
 
-    <label for="pseudo">Rentrez un pseudo d'au moins 3 lettres</label>
-    <input type="text" id="pseudo"> 
-
+    <div class="center">
+      <h2 id="titre">Choisir ses places</h2>
+      <form action="php/ticketPost.php" method="post">
+        <label for="email" id = labelEmail>Entrer votre email:</label>
+        <input type="email" id="email" name="email">
+        <h3>Coordonnées bancaires</h3>
+        <label for="numeroCarte">Numéro de carte:</label>
+        <input type="numeroCarte" id="numeroCarte" name="numeroCarte">
+        <label for="expiration">Date d'expiration:</label>
+        <input type="expiration" id="expiration" name="expiration">
+        <label for="CVC">CVC:</label>
+        <input type="CVC" id="CVC" name="CVC">
+        <button id="submit" disabled="disabled" onclick="submitReservation()">Réserver</button>
+      </form>
+    </div>
     
     <link rel="stylesheet" href="css/sessionPage.css">
 

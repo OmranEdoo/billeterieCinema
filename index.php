@@ -10,10 +10,8 @@
 
     <nav class="center">
         <ul class="liste">
-            <li class="item">Accueil</li>
-            <li class="item">Projets</li>
-            <li class="item">Services</li>
-            <li class="item">Contact</li>
+            <li class="item" id="accueil" onclick="retournerPageAccueil()">Accueil</li>
+            <li class="item" id="contact">Contact</li>
         </ul>
     </nav>
   
@@ -42,11 +40,13 @@
     <div id="affichesContainer"></div>
     
     <script src="js/movie.js"></script>
+    <script src="js/ticket.js"></script>
     <script src="js/movieRoom.js"></script>
     <script src="js/seats.js"></script>
     <script src="js/session.js"></script>
     <script src="js/postersCreator.js"></script>
     <script src="js/movieManager.js"></script>
+    <script src="js/ticketPost.js"></script>
     <script src="js/movieRoomManager.js"></script>
     <script src="js/sessionManager.js"></script>
     <script src="js/seatsManager.js"></script>

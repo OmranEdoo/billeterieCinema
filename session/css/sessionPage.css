@@ -1,3 +1,9 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    height: 100vh;
+    margin: 0;
+}
+
 #seats{
     display: grid;
     gap: 10px 10px;
@@ -6,4 +12,56 @@
 .seat{
     height: 10px;
     width: 20px;
+    border-radius: 20%;
+}
+
+.center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.liste {
+    width: 100%;
+    height: 100%;
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.item {
+    margin: 0 10px;
+    font-size: 22px;
+}
+
+.item:hover {
+    color: rgb(109, 109, 109);
+}
+
+nav {
+    width: 100%;
+    height:50px;
+    background: #333;
+    color: #f1f1f1;
+    position: fixed;
+    z-index: 1;
+}
+
+h2{
+    color: rgb(90, 90, 90);
+    font-family: 'Oswald';
+    letter-spacing: 2px;
+    margin-top: 60px;
+}
+
+#submit{
+    width: 200px;
+    height: 30px;
+    margin-top: 30px;
+}
+
+#labelEmail{
+    margin-top: 20px;
 }

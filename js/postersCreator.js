@@ -14,6 +14,9 @@ home.style.height = ""+$(document).height()+"px;";
 
 let nbAffiches;
 
+function retournerPageAccueil(){
+    window.open("../index.php");
+}
 
 // création initiale des affiches dans la bande de scroll
 for(let i = 0; i<nbAffichesScroll; i++){
